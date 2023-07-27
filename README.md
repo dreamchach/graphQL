@@ -76,3 +76,20 @@ const typeDefs = gql`
 ```
 
 `type Mutation`은 `DELETE`, `PUT`, `POST` 메서드를 사용할 때, 반드시 데이터를 넣어야 한다.
+
+## 5. Non Nullable Fields
+```javascript
+const typeDefs = gql`
+    type Tweet {
+        id : ID!
+    }
+    type Query {
+        allTweets : [Tweet!]!
+        tweet(id : ID!) : Tweet
+    }
+`
+```
+
+`!`는 `Nullable`을 허용하는 않는다는 뜻이다.
+만약 `Tweet`의 `id` 데이터 값으로 `ID`나 `null`이 올 수 있는데, `!`를 붙이면 절대 `null`이 오면 안된다.
+
