@@ -43,3 +43,19 @@ const typeDefs = gql`
 `
 ```
 반드시 `typeDefs`변수 root에는 Query타입을 넣어줘야 함
+
+## 3. Scalar and Root Types
+만약 id값으로 특정한 데이터를 찾으려 한다면 `arguments`를 설정해줘야 한다.
+
+```javascript
+const typeDefs = gql`
+    type Tweet {
+        id : ID
+    }
+    type Query {
+        tweet(id : ID) : Tweet
+    }
+`
+```
+`tweet(id : ID) : Tweet` 여기에서 `()`로 감싸진 부분이 `arguments`이다.
+
