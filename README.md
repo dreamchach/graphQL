@@ -59,3 +59,20 @@ const typeDefs = gql`
 ```
 `tweet(id : ID) : Tweet` 여기에서 `()`로 감싸진 부분이 `arguments`이다.
 
+## 4. Mutation Type
+```javascript
+const typeDefs = gql`
+    type Tweet {
+        id : ID
+    }
+    type Query {
+        tweet(id : ID) : Tweet
+    }
+    type Mutation {
+        postTweet(text: String, userId : ID) : Tweet
+        deleteTweet(id : ID) : Boolean
+    }
+`
+```
+
+`type Mutation`은 `DELETE`, `PUT`, `POST` 메서드를 사용할 때, 반드시 데이터를 넣어야 한다.
