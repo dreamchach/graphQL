@@ -93,3 +93,48 @@ const typeDefs = gql`
 `!`는 `Nullable`을 허용하는 않는다는 뜻이다.
 만약 `Tweet`의 `id` 데이터 값으로 `ID`나 `null`이 올 수 있는데, `!`를 붙이면 절대 `null`이 오면 안된다.
 
+## 6. Query Resolvers
+```javascript
+const tweets = [
+    {
+        id : '1',
+        text : 'first one!'
+    },
+    {
+        id : '2',
+        text : 'second one!'
+    }
+]
+
+const typeDefs = gql`
+    type Tweet {
+        text : String
+    }
+    type Query {
+        allTweets : [Tweet!]!
+        tweet(id : ID!) : Tweet
+        ping : String!
+    }
+`
+
+const resolvers = {
+    Query : {
+        tweet(root, {id}) {
+            console.log("I'm called")
+            console.log(id)
+            return tweets.find((tweet) => tweet.id === id)
+        },
+        ping() {
+            return 'pong'
+        },
+        allTweets() {
+            return tweets
+        }
+    }
+}
+
+const server = new ApolloServer({typeDefs, resolvers})
+```
+
+`resolvers`를 설정해서 query값을 받을 수 있도록 함
+
