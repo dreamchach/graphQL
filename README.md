@@ -207,3 +207,56 @@ const resolvers = {
     }
 }
 ```
+
+## 9. Relationships
+```javascript
+let tweets = [
+    {
+        id : '1',
+        userId : "2"
+    },
+    {
+        id : '2',
+        userId : "1"
+    }
+]
+
+let users = [
+    {
+        id : "1",
+        firstName : "nico",
+        lastName : "les"
+    },{
+        id : "2",
+        firstName : "Elon",
+        lastName : 'Mask'
+    }
+]
+
+const typeDefs = gql`
+    type User {
+        id : ID!
+        fullName : String!
+    }
+    type Tweet {
+        id : ID!
+        author : User!
+    }
+`
+
+const resolvers = {
+    Query : {
+        tweet(root, {id}) {
+            return tweets.find((tweet) => tweet.id === id)
+        },
+        allTweets() {
+            return tweets
+        }
+    },
+    Tweet : {
+        author({userId}) {
+            return users.find((user) => user.id === userId)
+        }
+    }
+}
+```

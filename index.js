@@ -7,11 +7,13 @@ import { ApolloServer, gql } from "apollo-server";
 let tweets = [
     {
         id : '1',
-        text : 'first one!'
+        text : 'first one!',
+        userId : "2"
     },
     {
         id : '2',
-        text : 'second one!'
+        text : 'second one!',
+        userId : "1"
     }
 ]
 
@@ -90,6 +92,11 @@ const resolvers = {
             console.log('called fullName')
             // console.log(root)
             return `${firstName} ${lastName}`
+        }
+    },
+    Tweet : {
+        author({userId}) {
+            return users.find((user) => user.id === userId)
         }
     }
 }
