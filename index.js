@@ -30,6 +30,44 @@ let users = [
 ]
 
 const typeDefs = gql`
+    type Rating {
+        Source : String
+        Value : String
+    }
+    type Movie {
+        Title : String
+        Year : String 
+        Rated : String
+        Released : String
+        Runtime : String
+        Genre : String
+        Director : String
+        Writer : String
+        Actors : String 
+        Plot : String
+        Language : String
+        Country : String
+        Awards : String
+        Poster : String
+        Ratings : [Rating]
+        Metascore : String
+        imdbRating : String
+        imdbVotes : String
+        imdbID : String
+        Type : String 
+        DVD : String
+        BoxOffice : String
+        Production : String
+        Website : String 
+        Response : String
+    }
+    type Movies {
+        Title : String!
+        Year : String!
+        imdbID : String!
+        Type : String!
+        Poster : String!
+    }
     """
     유저에 관한 설명
     """
@@ -51,6 +89,8 @@ const typeDefs = gql`
     협업을 위해 설명이 필요합니다
     """
     type Query {
+        movie(id : String) : Movie
+        allMovies : [Movies!]!
         allUsers : [User!]!
         allTweets : [Tweet!]!
         tweet(id : ID!) : Tweet
@@ -78,6 +118,15 @@ const resolvers = {
         allUsers() {
             console.log('called user')
             return users
+        },
+        allMovies() {
+            return fetch("https://www.omdbapi.com/?apikey=7035c60c&s=hello")
+            .then((res) => res.json())
+            .then((res) => res.Search)
+        },
+        movie(root, {id}) {
+            return fetch(`http://www.omdbapi.com/?apikey=7035c60c&i=${id}`)
+            .then((res) => res.json())
         }
     },
     Mutation : {

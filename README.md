@@ -292,3 +292,68 @@ const typeDefs = gql`
 
 `apollo studio`를 대체할 프로그램으로는 `Altair GraphQL Client`이 있습니다. 
 `Altair GraphQL Client`는 오프라인에서도 사용할 수 있는 장점이 있습니다.
+
+## 11. Migrating from REST to GraphQL
+```javascript
+const typeDefs = gql`
+    type Rating {
+        Source : String
+        Value : String
+    }
+    type Movie {
+        Title : String
+        Year : String 
+        Rated : String
+        Released : String
+        Runtime : String
+        Genre : String
+        Director : String
+        Writer : String
+        Actors : String 
+        Plot : String
+        Language : String
+        Country : String
+        Awards : String
+        Poster : String
+        Ratings : [Rating]
+        Metascore : String
+        imdbRating : String
+        imdbVotes : String
+        imdbID : String
+        Type : String 
+        DVD : String
+        BoxOffice : String
+        Production : String
+        Website : String 
+        Response : String
+    }
+    type Movies {
+        Title : String!
+        Year : String!
+        imdbID : String!
+        Type : String!
+        Poster : String!
+    }
+`
+const resolvers = {
+    Query : {
+        allMovies() {
+            return fetch("https://www.omdbapi.com/?apikey=7035c60c&s=hello")
+            .then((res) => res.json())
+            .then((res) => res.Search)
+        },
+        movie(root, {id}) {
+            return fetch(`http://www.omdbapi.com/?apikey=7035c60c&i=${id}`)
+            .then((res) => res.json())
+        }
+    }
+}
+```
+
+`fetch API`로 `REST API`에 관한 자료를 받아올 수 있다.
+
+`subscription type`에 관해 알아두는 것이 좋다.
+> API가 변경되었을 때 리얼타임으로 업데이트를 받는다.
+참고 사이트 : https://www.daleseo.com/graphql-apollo-server-subscriptions/
+
+`Hasura`(https://hasura.io/)는 datebase를 GraphQL로 변경해준다.
