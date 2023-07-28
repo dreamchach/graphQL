@@ -138,3 +138,36 @@ const server = new ApolloServer({typeDefs, resolvers})
 
 `resolvers`를 설정해서 query값을 받을 수 있도록 함
 
+## 7. Mutation Resolvers
+```javascript
+let tweets = [
+    {
+        id : '1',
+        text : 'first one!'
+    },
+    {
+        id : '2',
+        text : 'second one!'
+    }
+]
+
+const resolvers = {
+    Query : {...},
+    Mutation : {
+        postTweet(root, {text, userId}) {
+            const newTweet = {
+                id : tweets.length + 1,
+                text
+            }
+            tweets.push(newTweet)
+            return newTweet
+        },
+        deleteTweet(root, {id}) {
+            const tweet = tweets.find((tweet) => tweet.id === id)
+            if(!tweet) return false
+            tweets = tweets.filter((tweet) => tweet.id !== id)
+            return true
+        }
+    }
+}
+```

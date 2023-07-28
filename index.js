@@ -4,7 +4,7 @@ import { ApolloServer, gql } from "apollo-server";
 // package.json에 "type" : "module"을 설정하지 않았을 때
 // const {ApolloServer, gql} = require("apollo-server") 
 
-const tweets = [
+let tweets = [
     {
         id : '1',
         text : 'first one!'
@@ -48,6 +48,22 @@ const resolvers = {
         },
         allTweets() {
             return tweets
+        }
+    },
+    Mutation : {
+        postTweet(root, {text, userId}) {
+            const newTweet = {
+                id : tweets.length + 1,
+                text
+            }
+            tweets.push(newTweet)
+            return newTweet
+        },
+        deleteTweet(root, {id}) {
+            const tweet = tweets.find((tweet) => tweet.id === id)
+            if(!tweet) return false
+            tweets = tweets.filter((tweet) => tweet.id !== id)
+            return true
         }
     }
 }
