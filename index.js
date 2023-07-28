@@ -30,17 +30,26 @@ let users = [
 ]
 
 const typeDefs = gql`
+    """
+    유저에 관한 설명
+    """
     type User {
         id : ID!
         firstName : String!
         lastName : String!
         fullName : String!
     }
+    """
+    밑에 있는 타입에 관한 설명을 apollo studio의 schema 페이지에서 설명을 확인할 수 있습니다.
+    """
     type Tweet {
         id : ID!
         text : String
         author : User!
     }
+    """
+    협업을 위해 설명이 필요합니다
+    """
     type Query {
         allUsers : [User!]!
         allTweets : [Tweet!]!

@@ -260,3 +260,35 @@ const resolvers = {
     }
 }
 ```
+
+## 10. Documentation
+```javascript
+const typeDefs = gql`
+    """
+    유저에 관한 설명
+    """
+    type User {
+        id : ID!
+    }
+    """
+    밑에 있는 타입에 관한 설명을 apollo studio의 schema 페이지에서 설명을 확인할 수 있습니다.
+    """
+    type Tweet {
+        id : ID!
+        author : User!
+    }
+    """
+    협업을 위해 설명이 필요합니다
+    """
+    type Query {
+        allUsers : [User!]!
+        allTweets : [Tweet!]!
+    }
+`
+```
+
+`"""`으로 `schame`에 대한 설명을 넣을 수 있습니다.
+넣은 설명은 https://studio.apollographql.com/sandbox/schema/reference 에서 확인할 수 있습니다.
+
+`apollo studio`를 대체할 프로그램으로는 `Altair GraphQL Client`이 있습니다. 
+`Altair GraphQL Client`는 오프라인에서도 사용할 수 있는 장점이 있습니다.
