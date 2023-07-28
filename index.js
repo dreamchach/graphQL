@@ -15,10 +15,24 @@ let tweets = [
     }
 ]
 
+let users = [
+    {
+        id : "1",
+        firstName : "nico",
+        lastName : "les"
+    },{
+        id : "2",
+        firstName : "Elon",
+        lastName : 'Mask'
+    }
+]
+
 const typeDefs = gql`
     type User {
         id : ID!
-        username : String!
+        firstName : String!
+        lastName : String!
+        fullName : String!
     }
     type Tweet {
         id : ID!
@@ -26,6 +40,7 @@ const typeDefs = gql`
         author : User!
     }
     type Query {
+        allUsers : [User!]!
         allTweets : [Tweet!]!
         tweet(id : ID!) : Tweet
         ping : String!
@@ -48,6 +63,10 @@ const resolvers = {
         },
         allTweets() {
             return tweets
+        },
+        allUsers() {
+            console.log('called user')
+            return users
         }
     },
     Mutation : {
@@ -64,6 +83,13 @@ const resolvers = {
             if(!tweet) return false
             tweets = tweets.filter((tweet) => tweet.id !== id)
             return true
+        }
+    },
+    User : {
+        fullName({firstName, lastName}) {
+            console.log('called fullName')
+            // console.log(root)
+            return `${firstName} ${lastName}`
         }
     }
 }

@@ -171,3 +171,39 @@ const resolvers = {
     }
 }
 ```
+
+## 8. Type Resolvers 
+```javascript
+let users = [
+    {
+        id : "1",
+        firstName : "nico",
+        lastName : "les"
+    },{
+        id : "2",
+        firstName : "Elon",
+        lastName : 'Mask'
+    }
+]
+
+const typeDefs = gql`
+    type User {
+        id : ID!
+        firstName : String!
+        lastName : String!
+        fullName : String!
+    }
+`
+
+const resolvers = {
+    Query : {...},
+    Mutation : {...},
+    User : {
+        fullName({firstName, lastName}) {
+            console.log('called fullName')
+            // console.log(root)
+            return `${firstName} ${lastName}`
+        }
+    }
+}
+```
