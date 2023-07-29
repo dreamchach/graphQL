@@ -55,7 +55,6 @@ https://www.npmjs.com/package/graphql-tag
 // apollo.js
 
 import {ApolloClient, InMemoryCache} from '@apollo/client'
-import gql from 'graphql-tag'
 
 const client = new ApolloClient({
     uri: 'http://localhost:4000/',
@@ -81,3 +80,41 @@ export default client
 import client from './apollo';
 ```
 삽입
+
+## 4. ApolloProvider
+```javascript
+// index.js
+
+import client from './apollo';
+import { ApolloProvider } from '@apollo/client';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+    ...
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+    ...
+);
+```
+
+```javascript
+// Movies.jsx
+
+import { gql, useApolloClient } from '@apollo/client'
+
+const Movies = () => {
+  const client = useApolloClient()
+  const [Movies, setMovies] = useState([])
+   useEffect(() => {
+    client.query({
+      query : gql`
+      {
+        allMovies {
+          Title
+        }
+      }
+      `
+    }).then((res) => setMovies(res.data.allMovies))
+   }, [client])
+```
