@@ -42,3 +42,42 @@ npm install --save-dev @babel/plugin-proposal-private-property-in-object
 >error
 https://stackoverflow.com/questions/43620289/react-router-cannot-read-property-pathname-of-undefined
 https://anerim.tistory.com/209
+
+## 3. Setup
+>error
+https://stackoverflow.com/questions/47367601/react-apollo-gql-typeerror-object-is-not-a-function
+https://stackoverflow.com/questions/48863441/apollo-client-how-to-simply-debug-a-400-code-error
+
+>추가된 라이브러리
+https://www.npmjs.com/package/graphql-tag
+
+```javascript
+// apollo.js
+
+import {ApolloClient, InMemoryCache} from '@apollo/client'
+import gql from 'graphql-tag'
+
+const client = new ApolloClient({
+    uri: 'http://localhost:4000/',
+    cache : new InMemoryCache()
+})
+
+client.query({
+    // apollo studio에서 가져오면 좋음(철자 에러 없고, 태그 확인 가능)
+    query : gql`
+        query AllMovies {
+            allMovies {
+            Title
+            }
+        }
+    `
+}).then(data => console.log(data))
+
+export default client
+```
+```javascript
+// index.js
+
+import client from './apollo';
+```
+삽입
