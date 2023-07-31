@@ -156,3 +156,31 @@ const Movies = () => {
   )
 }
 ```
+
+## 6. useQuery Variables
+```javascript
+// Movie.jsx
+
+import { gql, useQuery } from '@apollo/client'
+import { useParams } from 'react-router-dom'
+
+const GET_MOVIE = gql`
+  query ($movieId: String) {
+    movie(id: $movieId) {
+      Title
+      imdbID
+    }
+  }
+`
+
+const Movie = () => {
+  const {id} = useParams()
+  const {data, loading, error} = useQuery(GET_MOVIE, {
+    variables : {
+      movieId : id
+    }
+  })
+
+  ...
+}
+```
