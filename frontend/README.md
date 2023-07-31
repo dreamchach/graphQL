@@ -118,3 +118,41 @@ const Movies = () => {
     }).then((res) => setMovies(res.data.allMovies))
    }, [client])
 ```
+
+## 5. useQuery
+```javascript
+// Movies.jsx
+
+import { gql, useQuery } from '@apollo/client'
+import { Link } from 'react-router-dom'
+
+const ALL_MOVIES = gql`
+  {
+    allMovies {
+      Title
+      imdbID
+    }
+  }
+`
+
+const Movies = () => {
+  const {data, loading, error} = useQuery(ALL_MOVIES)
+
+  if(loading) {
+    return <h1>Loading...</h1>
+  }
+  if(error) {
+    return <h1>Could not fetch :(</h1>
+  }
+
+  return (
+    <div>
+      {data.allMovies.map((item) => (
+        <div key={item.imdbID}>
+          <Link to={`/movies/${item.imdbID}`}>{item.Title}</Link>
+        </div>
+      ))}
+    </div>
+  )
+}
+```
