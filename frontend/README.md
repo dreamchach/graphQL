@@ -184,3 +184,8 @@ const Movie = () => {
   ...
 }
 ```
+
+## 7. Apollo Dev Tools
+1. 크롬 확장 프로그램
+- `apollo studio`와 동일한 기능 + 캐시 확인 기능
+- https://chrome.google.com/webstore/detail/apollo-client-devtools/jdkknkkbebbapilgoeccciglkfbmbnfm
