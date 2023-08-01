@@ -7,6 +7,7 @@ const GET_MOVIE = gql`
     movie(id: $movieId) {
       Title
       imdbID
+      isLiked @client
     }
   }
 `
@@ -25,7 +26,10 @@ const Movie = () => {
   }
 
   return (
-    <div>{data.movie.Title}</div>
+    <div>
+      <div>{data.movie.Title}</div>
+      <button>{data?.movie?.isLiked ? "Unlike" : "Like"}</button>
+    </div>
   )
 }
 

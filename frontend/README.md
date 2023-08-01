@@ -189,3 +189,19 @@ const Movie = () => {
 1. 크롬 확장 프로그램
 - `apollo studio`와 동일한 기능 + 캐시 확인 기능
 - https://chrome.google.com/webstore/detail/apollo-client-devtools/jdkknkkbebbapilgoeccciglkfbmbnfm
+
+
+## 8. Local Only Fields
+```javascript
+const GET_MOVIE = gql`
+  query ($movieId: String) {
+    movie(id: $movieId) {
+      isLiked @client
+    }
+  }
+`
+```
+
+`@client`로 로컬에서 만든 필드인 것을 명시할 수 있다. 
+명시해두지 않으면 나중에 에러가 발생한다.
+
