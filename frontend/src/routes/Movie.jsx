@@ -3,10 +3,11 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 
 const GET_MOVIE = gql`
-  query ($movieId: String) {
+  query Movie($movieId: String) {
     movie(id: $movieId) {
-      Title
       imdbID
+      Title
+      id
       isLiked @client
     }
   }
@@ -14,12 +15,25 @@ const GET_MOVIE = gql`
 
 const Movie = () => {
   const {id} = useParams()
-  const {data, loading, error} = useQuery(GET_MOVIE, {
+  const {data, loading, error, client : {cache}} = useQuery(GET_MOVIE, {
     variables : {
-      movieId : id
+      movieId : id,
     }
   })
-  console.log(data)
+
+  const onclick = () => {
+    cache.writeFragment({
+      id : `Movie:${id}`,
+      fragment : gql`
+        fragment IWANT on Movie {
+          isLiked
+        }
+      `,
+      data : {
+        isLiked : !data?.movie?.isLiked
+      }
+    })
+  }
 
   if(loading) {
     return <h1>Fetching movie...</h1>
@@ -27,8 +41,8 @@ const Movie = () => {
 
   return (
     <div>
-      <div>{data.movie.Title}</div>
-      <button>{data?.movie?.isLiked ? "Unlike" : "Like"}</button>
+      <div>{data?.movie?.Title}</div>
+      <button onClick={onclick}>{data?.movie?.isLiked ? 'Unlike' : 'Like'}</button>
     </div>
   )
 }

@@ -3,16 +3,18 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const ALL_MOVIES = gql`
-  {
+  query Movie {
     allMovies {
-      Title
       imdbID
+      Title
+      id
     }
   }
 `
 
 const Movies = () => {
   const {data, loading, error} = useQuery(ALL_MOVIES)
+  console.log(data)
 
   if(loading) {
     return <h1>Loading...</h1>

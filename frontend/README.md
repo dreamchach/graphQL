@@ -205,3 +205,23 @@ const GET_MOVIE = gql`
 `@client`로 로컬에서 만든 필드인 것을 명시할 수 있다. 
 명시해두지 않으면 나중에 에러가 발생한다.
 
+## 9. writeFragment
+```javascript
+  const {data, loading, error, client : {cache}} = useQuery(GET_MOVIE, ...)
+
+  const onclick = () => {
+    cache.writeFragment({
+      id : `Movie:${id}`,
+      fragment : gql`
+        fragment IWANT on Movie {
+          isLiked
+        }
+      `,
+      data : {
+        isLiked : !data?.movie?.isLiked
+      }
+    })
+  }
+```
+
+cache는 `__typename + id`으로 구성된 객체들이 있다. 이 부분이 수정되어야 하므로 backend를 수정했다.
